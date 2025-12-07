@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Sản phẩm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f3f4f6; }</style>
+</head>
+<body>
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center h-16">
+            <a href="index.html" class="flex items-center gap-2 font-bold text-xl text-gray-800">
+                <div class="bg-blue-600 p-2 rounded-lg text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                TechStore
+            </a>
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <a href="index.html" class="px-3 py-2 rounded-md font-medium text-sm text-blue-600 bg-blue-100">Sản phẩm</a>
+                <a href="cart.html" class="px-3 py-2 rounded-md font-medium text-sm text-gray-600 hover:bg-gray-100 flex gap-1 items-center">
+                    Giỏ hàng <span id="cart-badge" class="bg-red-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                </a>
+                <a href="orders.html" class="px-3 py-2 rounded-md font-medium text-sm text-gray-600 hover:bg-gray-100">Đơn hàng</a>
+                <a href="profile.html" class="px-3 py-2 rounded-md font-medium text-sm text-gray-600 hover:bg-gray-100 flex items-center gap-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span class="hidden md:inline">Tài khoản</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 min-h-screen">
+        <div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-6 py-3 rounded shadow-lg transform translate-y-32 transition-transform duration-300 z-50">Thêm vào giỏ thành công!</div>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white rounded-lg shadow p-4 sticky top-20">
+                    <h3 class="font-bold text-lg mb-4 text-gray-800">Danh mục</h3>
+                    <ul class="space-y-2" id="category-list"></ul>
+                </div>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800" id="category-title">Tất cả sản phẩm</h2>
+                    <input type="text" id="search-input" placeholder="Tìm kiếm..." class="pl-4 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" onkeyup="handleSearch()">
+                </div>
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const CATEGORIES = [{ id: 0, name: 'Tất cả sản phẩm' }, { id: 1, name: 'Điện thoại' }, { id: 2, name: 'Phụ kiện' }];
+        const PRODUCTS = [
+            { id: 1, catId: 1, name: 'iPhone 17 Pro Max', price: 37990000, color: 'Titan Đen' },
+            { id: 2, catId: 1, name: 'Samsung Galaxy S26 Ultra', price: 31990000, color: 'Xanh Lime' },
+            { id: 3, catId: 1, name: 'Xiaomi 16 Pro', price: 19990000, color: 'Trắng Sứ' },
+            { id: 4, catId: 2, name: 'Tai nghe AirPro 4', price: 6500000, color: 'Trắng' },
+            { id: 5, catId: 2, name: 'Sạc nhanh 100W', price: 1200000, color: 'Đen' }
+        ];
+
+        let currentCategory = 0;
+        let searchQuery = '';
+        let cart = JSON.parse(localStorage.getItem('techstore_cart')) || [];
+
+        function init() { renderCategories(); renderProducts(); updateBadge(); }
+        function formatMoney(n) { return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n); }
+
+        function renderCategories() {
+            document.getElementById('category-list').innerHTML = CATEGORIES.map(c => 
+                `<li><button onclick="filterCategory(${c.id})" class="w-full text-left px-3 py-2 rounded ${currentCategory === c.id ? 'bg-blue-50 text-blue-600 font-bold' : 'hover:bg-gray-50'}">${c.name}</button></li>`
+            ).join('');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const filtered = PRODUCTS.filter(p => (currentCategory === 0 || p.catId === currentCategory) && p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md p-5 border border-gray-100 flex flex-col h-full">
+                    <div class="h-32 bg-gray-50 rounded mb-4 flex items-center justify-center text-gray-400 font-bold text-2xl bg-gray-100">${p.name.charAt(0)}</div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-1">${p.name}</h3>
+                    <p class="text-sm text-gray-500 mb-4">${p.color}</p>
+                    <div class="mt-auto flex justify-between items-center">
+                        <span class="text-lg font-bold text-red-600">${formatMoney(p.price)}</span>
+                        <button onclick="addToCart(${p.id})" class="bg-blue-100 text-blue-600 p-2 rounded-full hover:bg-blue-600 hover:text-white transition">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            const exist = cart.find(i => i.id === id);
+            if(exist) exist.qty++; else cart.push({...product, qty: 1});
+            localStorage.setItem('techstore_cart', JSON.stringify(cart));
+            updateBadge();
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-32');
+            setTimeout(() => toast.classList.add('translate-y-32'), 2000);
+        }
+
+        function updateBadge() {
+            const count = cart.reduce((a, b) => a + b.qty, 0);
+            const el = document.getElementById('cart-badge');
+            el.innerText = count;
+            count > 0 ? el.classList.remove('hidden') : el.classList.add('hidden');
+        }
+
+        window.filterCategory = (id) => { currentCategory = id; renderCategories(); renderProducts(); };
+        window.handleSearch = () => { searchQuery = document.getElementById('search-input').value; renderProducts(); };
+        init();
+    </script>
+</body>
+</html>

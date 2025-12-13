@@ -1,4 +1,4 @@
-<?php require_once 'views/layout/header.php'; ?>
+<?php require_once 'layout/header.php'; ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-sticky">
     <div class="container px-4">
         <a href="index.php?page=Dashboard" class="navbar-brand d-flex align-items-center gap-2 fw-bold text-dark fs-5">
@@ -65,7 +65,7 @@
                     </li>
                     <?php foreach ($list_categories as $category): ?>
                         <li>
-                            <a href="index.php?page=Dashboard&action=filter_<?php echo $category['id_category']?>" class="text-decoration-none text-secondary category-item" data-category="<?php echo $category['id_category']; ?>">
+                            <a href="index.php?page=Dashboard&action=filter&category_id=<?php echo $category['id_category']?>" class="text-decoration-none text-secondary category-item" data-category="<?php echo $category['id_category']; ?>">
                                 <?php echo $category['name']; ?>
                             </a>
                         </li>
@@ -76,7 +76,7 @@
 
         <div class="col-12 col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fs-4 fw-bold text-dark" id="category-title">Tất cả sản phẩm (<?php echo $total_products ?>)</h2>
+                <h2 class="fs-4 fw-bold text-dark" id="category-title">Tất cả sản phẩm (<?php echo $totalProducts; ?>)</h2>
                 <input type="text" id="search-input" placeholder="Tìm kiếm..." class="form-control w-auto" onkeyup="handleSearch()">
             </div>
 
@@ -114,4 +114,4 @@
         </div>
     </div>
 </main>
-<?php require_once 'views/layout/footer.php'; ?>
+<?php require_once 'layout/footer.php'; ?>

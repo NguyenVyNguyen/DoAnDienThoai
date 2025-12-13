@@ -39,8 +39,8 @@
                     <div class="mb-3">
                         <label class="form-label">Vai trò</label>
                         <select name="role" class="form-select">
-                            <option value="0" <?php echo ($user['role'] == 0) ? 'selected' : ''; ?>>Khách hàng / Nhân viên</option>
-                            <option value="1" <?php echo ($user['role'] == 1) ? 'selected' : ''; ?>>Quản trị viên (Admin)</option>
+                            <option value="0" <?php echo ($user['role'] == 0) ? 'selected' : ''; ?>>Khách hàng</option>
+                            <option value="1" <?php echo ($user['role'] == 1) ? 'selected' : ''; ?>>Admin</option>
                         </select>
                     </div>
 

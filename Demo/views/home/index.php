@@ -1,6 +1,7 @@
 <?php
 // Hàm hỗ trợ chọn ảnh demo dựa trên tên sản phẩm
-function getProductImage($name) {
+function getProductImage($name)
+{
     $name = strtolower($name);
     if (strpos($name, 'iphone') !== false) return 'https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg';
     if (strpos($name, 'samsung') !== false) return 'https://cdn.tgdd.vn/Products/Images/42/301796/samsung-galaxy-s23-ultra-thumb-600x600.jpg';
@@ -21,7 +22,19 @@ function getProductImage($name) {
 </div>
 
 <h3 class="mb-4 text-uppercase fw-bold border-start border-4 border-primary ps-3">Sản phẩm nổi bật</h3>
-
+<!-- Lọc theo danh mục -->
+<h3 class="mb-4 text-uppercase fw-bold border-start border-4 border-primary ps-3">Danh mục</h3>
+<?php if (isset($category)): ?>
+    <div class="alert alert-info" role="alert">
+        Đang lọc theo danh mục: <strong><?= $category['name'] ?></strong>
+    </div>
+<?php endif; ?>
+<?php foreach ($categorys as $c): ?>
+    <a href="index.php?&a=filter&id=<?= $c['id_category'] ?>" class="btn btn-outline-primary btn-add-cart w-100">
+        <i class="fas fa-cart-plus me-1"></i> <?= $c['name'] ?>
+    </a>
+<?php endforeach; ?>
+<!-- Danh sách sản phẩm -->
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
     <?php foreach ($products as $p): ?>
         <div class="col">
@@ -36,7 +49,7 @@ function getProductImage($name) {
                         <?= htmlspecialchars($p['name']) ?>
                     </h5>
                     <p class="small text-secondary"><i class="fas fa-palette"></i> Màu: <?= htmlspecialchars($p['color']) ?></p>
-                    
+
                     <div class="mt-auto">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="h5 mb-0 text-danger fw-bold"><?= number_format($p['price'], 0, ',', '.') ?>đ</span>

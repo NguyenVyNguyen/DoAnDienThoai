@@ -2,9 +2,11 @@
 require_once 'controllers/BaseController.php';
 require_once 'models/ProductModel.php';
 
-class CartController extends BaseController {
-    
-    public function index() {
+class CartController extends BaseController
+{
+
+    public function index()
+    {
         $cart = $_SESSION['cart'] ?? [];
         $model = new ProductModel();
         $cartItems = [];
@@ -20,6 +22,9 @@ class CartController extends BaseController {
             }
         }
 
+        // Gắn active page
+        $_SESSION['active_page'] = 'cart';
+
         $this->render('cart/index', [
             'cartItems' => $cartItems,
             'totalMoney' => $totalMoney,
@@ -27,7 +32,8 @@ class CartController extends BaseController {
         ]);
     }
 
-    public function add() {
+    public function add()
+    {
         $id = $_GET['id'] ?? 0;
         if ($id) {
             $_SESSION['cart'][$id] = ($_SESSION['cart'][$id] ?? 0) + 1;
@@ -35,7 +41,8 @@ class CartController extends BaseController {
         header('Location: index.php?c=cart');
     }
 
-    public function delete() {
+    public function delete()
+    {
         $id = $_GET['id'] ?? 0;
         if (isset($_SESSION['cart'][$id])) {
             unset($_SESSION['cart'][$id]);
@@ -43,4 +50,3 @@ class CartController extends BaseController {
         header('Location: index.php?c=cart');
     }
 }
-?>

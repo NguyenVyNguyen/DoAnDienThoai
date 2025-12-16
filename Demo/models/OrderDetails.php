@@ -8,12 +8,18 @@ class OrderDetails
         $this->conn = Database::connect();
     }
 
-    public function getAll()
+    public function getAll($id_user)
     {
-        $sql = "select * from orderdetails join product on orderdetails.id_product = product.id_product
-                ORDER BY orderdetails.id_order ASC";
+        $sql = "SELECT *
+            FROM orderdetails od
+            JOIN product p ON od.id_product = p.id_product
+            JOIN `order` o ON od.id_order = o.id_order
+            WHERE o.id_user = :id_user
+            ORDER BY od.date ASC";
+
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
+        $stmt->execute(['id_user' => $id_user]);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

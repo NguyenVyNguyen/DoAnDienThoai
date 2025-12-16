@@ -118,6 +118,14 @@
                             <?php endif; ?>
                         </a>
                     </li>
+                    <?php if (isset($_SESSION['user'])): ?>
+                        <li class="nav-item"> <a class="nav-link" href="#"><b>Xin chào, <?= htmlspecialchars($_SESSION['user']['fullname']) ?></b></a></li>
+                        <li class="nav-item"><a class="nav-link <?php echo ($_SESSION['active_page'] == 'profile' ? 'active' : '') ?>" href="index.php?c=user&a=profile">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php?c=user&a=logout">Đăng xuất</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a class="nav-link <?php echo ($_SESSION['active_page'] == 'login' ? 'active' : '') ?>" href="index.php?c=user">Đăng nhập</a></li>
+                        <li class="nav-item"><a class="nav-link <?php echo ($_SESSION['active_page'] == 'signin' ? 'active' : '') ?>" href="index.php?c=user">Đăng ký</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

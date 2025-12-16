@@ -7,8 +7,10 @@ class OrderDetailsController extends BaseController
 
     public function index()
     {
+        $id_user = isset($_SESSION['user']) ? $_SESSION['user']['id_user'] : null;
+        // $id_user = 3; // Tạm thời giả lập user với id_user = 2
         $model = new OrderDetails();
-        $orderDetails = $model->getAll();
+        $orderDetails = $model->getAll($id_user);
 
         // Gắn active page
         $_SESSION['active_page'] = 'order_details';

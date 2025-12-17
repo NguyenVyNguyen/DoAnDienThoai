@@ -24,4 +24,21 @@ class OrderModel
         $stmt->execute([':id_order' => $id_order]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Tạo đơn hàng mới
+    public function create($id_user, $status = "pending")
+    {
+        $stmt = $this->conn->prepare(
+            "INSERT INTO `order` (id_user, status)
+             VALUES (:id_user, :status)"
+        );
+        $stmt->execute([
+            ':id_user' => $id_user,
+            ':status' => $status
+        ]);
+        $stmt = $this->conn->prepare("SELECT LAST_INSERT_ID() as id_order");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['id_order'];
+    }
 }

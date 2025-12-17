@@ -1,6 +1,6 @@
 <h2 class="mb-4"><i class="fas fa-shopping-cart me-2"></i>Giỏ hàng của bạn</h2>
 
-<?php if(empty($cartItems)): ?>
+<?php if (empty($cartItems)): ?>
     <div class="text-center py-5 bg-white rounded shadow-sm">
         <i class="fas fa-shopping-basket fa-3x text-muted mb-3"></i>
         <p class="lead">Giỏ hàng đang trống!</p>
@@ -23,23 +23,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($cartItems as $item): ?>
-                                <tr>
-                                    <td>
-                                        <div class="fw-bold"><?= htmlspecialchars($item['name']) ?></div>
-                                        <small class="text-muted"><?= $item['color'] ?></small>
-                                    </td>
-                                    <td><?= number_format($item['price']) ?>đ</td>
-                                    <td class="text-center">
-                                        <span class="badge bg-light text-dark border p-2"><?= $item['qty'] ?></span>
-                                    </td>
-                                    <td class="fw-bold text-primary"><?= number_format($item['total']) ?>đ</td>
-                                    <td>
-                                        <a href="index.php?c=cart&a=delete&id=<?= $item['id_product'] ?>" class="text-danger" onclick="return confirm('Xóa sản phẩm này?')">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($cartItems as $item): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold"><?= htmlspecialchars($item['name']) ?></div>
+                                            <small class="text-muted"><?= $item['color'] ?></small>
+                                        </td>
+                                        <td><?= number_format($item['price']) ?>đ</td>
+                                        <td class="text-center">
+                                            <span class="badge bg-light text-dark border p-2"><?= $item['qty'] ?></span>
+                                        </td>
+                                        <td class="fw-bold text-primary"><?= number_format($item['total']) ?>đ</td>
+                                        <td>
+                                            <a href="index.php?c=cart&a=delete&id=<?= $item['id_product'] ?>" class="text-danger" onclick="return confirm('Xóa sản phẩm này?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
@@ -60,7 +60,7 @@
                         <span class="h5">Thành tiền:</span>
                         <span class="h5 text-danger"><?= number_format($totalMoney) ?>đ</span>
                     </div>
-                    <button class="btn btn-success w-100 rounded-pill py-2 fw-bold">THANH TOÁN NGAY</button>
+                    <a href="index.php?c=cart&a=success" class="btn btn-success w-100 rounded-pill py-2 fw-bold">THANH TOÁN NGAY</a>
                     <a href="index.php" class="btn btn-outline-secondary w-100 rounded-pill py-2 mt-2">Tiếp tục mua hàng</a>
                 </div>
             </div>

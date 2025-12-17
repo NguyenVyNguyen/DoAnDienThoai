@@ -22,4 +22,18 @@ class OrderDetails
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Insert order details
+    public function create($id_order, $id_product, $quantity)
+    {
+        $stmt = $this->conn->prepare(
+            "INSERT INTO orderdetails (id_order, id_product, quantitybuy, date)
+             VALUES (:id_order, :id_product, :quantity, NOW())"
+        );
+        return $stmt->execute([
+            ':id_order'   => $id_order,
+            ':id_product' => $id_product,
+            ':quantity'   => $quantity
+        ]);
+    }
 }

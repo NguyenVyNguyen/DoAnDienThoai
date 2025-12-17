@@ -7,6 +7,10 @@ class OrderDetailsController extends BaseController
 
     public function index()
     {
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?c=user&a=loginerror');
+            exit();
+        }
         $id_user = isset($_SESSION['user']) ? $_SESSION['user']['id_user'] : null;
         // $id_user = 3; // Tạm thời giả lập user với id_user = 2
         $model = new OrderDetails();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 30, 2025 lúc 10:00 AM
+-- Thời gian đã tạo: Th12 19, 2025 lúc 11:53 AM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 7.4.33
 
@@ -31,7 +31,7 @@ CREATE TABLE `category` (
   `id_category` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `brand` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `category`
@@ -51,7 +51,7 @@ CREATE TABLE `order` (
   `id_order` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `status` varchar(50) DEFAULT 'pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `order`
@@ -65,8 +65,7 @@ INSERT INTO `order` (`id_order`, `id_user`, `status`) VALUES
 (5, 6, 'Đang giao'),
 (6, 7, 'Đã hủy'),
 (7, 8, 'Hoàn thành'),
-(8, 9, 'Chờ xử lý'),
-(9, 10, 'Đang giao'),
+(8, 9, 'Hoàn thành'),
 (10, 2, 'Hoàn thành');
 
 -- --------------------------------------------------------
@@ -80,7 +79,7 @@ CREATE TABLE `orderdetails` (
   `id_product` int(11) NOT NULL,
   `date` date NOT NULL,
   `quantitybuy` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `orderdetails`
@@ -95,7 +94,6 @@ INSERT INTO `orderdetails` (`id_order`, `id_product`, `date`, `quantitybuy`) VAL
 (5, 9, '2025-11-29', 1),
 (7, 6, '2025-11-29', 2),
 (8, 3, '2025-11-30', 1),
-(9, 10, '2025-11-30', 2),
 (10, 8, '2025-11-30', 3);
 
 -- --------------------------------------------------------
@@ -113,24 +111,25 @@ CREATE TABLE `product` (
   `price` bigint(20) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 0,
   `status` varchar(50) DEFAULT NULL,
-  `warrantyperiod` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `warrantyperiod` int(11) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `product`
 --
 
-INSERT INTO `product` (`id_product`, `id_user`, `id_category`, `name`, `color`, `price`, `quantity`, `status`, `warrantyperiod`) VALUES
-(1, 1, 1, 'iPhone 17 Pro Max', 'Titan Đen', 37990000, 50, 'Còn hàng', 12),
-(2, 1, 1, 'Samsung Galaxy S26 Ultra', 'Xanh Lime', 31990000, 45, 'Còn hàng', 12),
-(3, 1, 1, 'Xiaomi 16 Pro', 'Trắng Sứ', 19990000, 60, 'Còn hàng', 12),
-(4, 1, 2, 'Tai nghe AirPro 4', 'Trắng', 6500000, 75, 'Còn hàng', 12),
-(5, 1, 2, 'Củ sạc nhanh 100W PD', 'Đen', 1200000, 200, 'Còn hàng', 6),
-(6, 1, 2, 'Pin dự phòng 30000mAh', 'Xám', 1490000, 100, 'Còn hàng', 3),
-(7, 1, 2, 'Ốp lưng Silicon iPhone 17', 'Xanh Navy', 350000, 180, 'Còn hàng', 0),
-(8, 1, 2, 'Kính cường lực Samsung', 'Trong suốt', 150000, 300, 'Còn hàng', 0),
-(9, 1, 1, 'Oppo Find X7 Pro', 'Tím Nebula', 22990000, 40, 'Còn hàng', 12),
-(10, 1, 2, 'Dây cáp USB-C bện dù', 'Đỏ', 490000, 120, 'Còn hàng', 6);
+INSERT INTO `product` (`id_product`, `id_user`, `id_category`, `name`, `color`, `price`, `quantity`, `status`, `warrantyperiod`, `image`) VALUES
+(1, 1, 1, 'iPhone 17 Pro Max', 'Titan Đen', 37990000, 50, 'Còn hàng', 12, '1766138372_ip17-prm.jpeg'),
+(2, 1, 1, 'Samsung Galaxy S26 Ultra', 'Xanh Lime', 31990000, 45, 'Còn hàng', 12, '1766138366_samsung-galaxy-s26.jpeg'),
+(3, 1, 1, 'Xiaomi 16 Pro', 'Trắng Sứ', 19990000, 60, 'Còn hàng', 12, '1766138360_xiaomi-16.jpg'),
+(4, 1, 2, 'Tai nghe AirPro 4', 'Trắng', 6500000, 75, 'Còn hàng', 12, '1766138353_airpods-4.jpg'),
+(5, 1, 2, 'Củ sạc nhanh 100W PD', 'Đen', 1200000, 200, 'Còn hàng', 6, '1766138346_cu-sac-nhanh-100w.avif'),
+(6, 1, 2, 'Pin dự phòng 30000mAh', 'Xám', 1490000, 100, 'Còn hàng', 3, '1766138339_pin-du-phong-30000mAh.webp'),
+(7, 1, 2, 'Ốp lưng Silicon iPhone 17', 'Xanh Navy', 350000, 180, 'Còn hàng', 0, '1766138321_op-lung-iphone-17-pro-max-apple-silicone-with-magsafe_3_.png'),
+(8, 1, 2, 'Kính cường lực Samsung', 'Trong suốt', 150000, 300, 'Còn hàng', 0, '1766138331_mieng-dankinh-cuong-luc-samsung-galaxy-s25-ultra.jpg'),
+(9, 1, 1, 'Oppo Find X7 Pro', 'Tím Nebula', 22990000, 50, 'Còn hàng', 12, '1766138082_oppo-find-x7-tim.jpg'),
+(11, 1, 1, 'iPhone 17', 'Titan Đen', 30000000, 100, 'Còn hàng', 12, '1766138026_iphone-17.jpg');
 
 -- --------------------------------------------------------
 
@@ -146,7 +145,7 @@ CREATE TABLE `users` (
   `phone` varchar(20) DEFAULT NULL,
   `fullname` varchar(100) NOT NULL,
   `role` bit(1) NOT NULL DEFAULT b'0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
@@ -162,7 +161,7 @@ INSERT INTO `users` (`id_user`, `username`, `password`, `email`, `phone`, `fulln
 (7, 'dungkt', 'hashed_pass7', 'dung.kt@gmail.com', '0903456789', 'Kiều Thanh Dũng', b'0'),
 (8, 'annguyen', 'hashed_pass8', 'an.nguyen@fpt.vn', '0905678901', 'Nguyễn Đức An', b'0'),
 (9, 'buihuong', 'hashed_pass9', 'huong.bui@gmail.com', '0907890123', 'Bùi Thị Hương', b'0'),
-(10, 'vietanh', 'hashed_pass10', 'anh.viet@samsung.com', '0908901234', 'Ngô Việt Anh', b'0');
+(12, 'nguyen123', '$2y$10$F5.SOVm9PuFT.MI3/efR8.ewVIJYHuCTEt9NxxGu18GHCr1aI5TNW', 'nn@gmail.com', '0987654321', 'Nguyen Nguyen', b'1');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -224,13 +223,13 @@ ALTER TABLE `order`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

@@ -4,7 +4,7 @@ class Database
     private static $host = 'localhost';
     private static $dbname = 'doan_dt'; // Tên database của bạn
     private static $username = 'root';
-    private static $password = '123456';
+    private static $password = '';
 
     public static function connect()
     {

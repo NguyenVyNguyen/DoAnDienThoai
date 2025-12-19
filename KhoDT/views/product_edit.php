@@ -5,7 +5,7 @@
         <h4>Cập nhật sản phẩm: <?php echo $product['name']; ?></h4>
     </div>
     <div class="card-body">
-        <form method="POST" action="index.php?page=products&action=update">
+        <form method="POST" action="index.php?page=products&action=update" enctype="multipart/form-data">
             <input type="hidden" name="id_product" value="<?php echo $product['id_product']; ?>">
             
             <div class="row mb-3">
@@ -24,6 +24,24 @@
                     </select>
                 </div>
             </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Cập nhật ảnh mới (nếu muốn thay đổi)</label>
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ảnh hiện tại:</label>
+                    <div>
+                        <?php if (!empty($product['image']) && file_exists('uploads/' . $product['image'])): ?>
+                            <img src="uploads/<?php echo $product['image']; ?>" height="100" class="border rounded">
+                        <?php else: ?>
+                            <span class="text-muted">Chưa có ảnh</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Giá bán</label>

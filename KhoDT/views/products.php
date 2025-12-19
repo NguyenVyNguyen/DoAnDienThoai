@@ -26,12 +26,11 @@
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
-                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th> <th>Tên sản phẩm</th>
                     <th>Danh mục</th>
                     <th>Màu sắc</th>
                     <th>Giá bán</th>
                     <th>Tồn kho</th>
-                    <th>Bảo hành</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
@@ -40,6 +39,13 @@
                     <?php foreach ($products as $p): ?>
                     <tr>
                         <td>#<?php echo $p['id_product']; ?></td>
+                        <td>
+                            <?php if (!empty($p['image']) && file_exists('uploads/' . $p['image'])): ?>
+                                <img src="uploads/<?php echo $p['image']; ?>" width="60" height="60" style="object-fit: cover; border-radius: 5px;">
+                            <?php else: ?>
+                                <span class="text-muted small">Không ảnh</span>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <strong><?php echo $p['name']; ?></strong>
                         </td>
@@ -53,7 +59,6 @@
                                 <span class="badge bg-success"><?php echo $p['quantity']; ?></span>
                             <?php endif; ?>
                         </td>
-                        <td><?php echo $p['warrantyperiod']; ?> tháng</td>
                         <td>
                             <a href="index.php?page=products&action=edit&id=<?php echo $p['id_product']; ?>" 
                                class="btn btn-sm btn-outline-primary" title="Sửa">
@@ -79,7 +84,7 @@
 <div class="modal fade" id="productModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="POST" action="index.php?page=products&action=store">
+            <form method="POST" action="index.php?page=products&action=store" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title">Thêm sản phẩm mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -101,6 +106,12 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh sản phẩm</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                    </div>
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Giá bán</label>

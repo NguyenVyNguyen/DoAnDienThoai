@@ -37,9 +37,13 @@
         <div class="col">
             <div class="card h-100 border-0 shadow-sm product-card-hover rounded-4 overflow-hidden">
                 <div class="position-relative overflow-hidden bg-light" style="padding-top: 100%;">
-                    <img src="<?= htmlspecialchars($p['image']) ?>"
-                        alt="<?= htmlspecialchars($p['name']) ?>"
-                        class="position-absolute top-50 start-50 translate-middle w-100 h-100 p-3 object-fit-contain transition-transform">
+              
+                            <?php if (!empty($p['image']) && file_exists('../KhoDT/uploads/' . $p['image'])): ?>
+                                <img src="../KhoDT/uploads/<?php echo $p['image']; ?>" class="position-absolute top-50 start-50 translate-middle w-100 h-100 p-3 object-fit-contain transition-transform">
+                            <?php else: ?>
+                                <span class="text-muted small">Không ảnh</span>
+                            <?php endif; ?>
+        
 
                     <span class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-pill px-3 py-2 shadow-sm" style="font-size: 0.7rem;">
                         <?= htmlspecialchars($p['brand']) ?>

@@ -2,9 +2,9 @@
 class Database
 {
     private static $host = 'localhost';
-    private static $dbname = 'doan_dt'; // Tên database của bạn
+    private static $dbname = 'doan_dt1'; // Tên database của bạn
     private static $username = 'root';
-    private static $password = '';
+    private static $password = '123456';
 
     public static function connect()
     {

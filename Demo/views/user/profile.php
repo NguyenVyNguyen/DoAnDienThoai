@@ -74,9 +74,9 @@
                     <a href="index.php?c=orderdetails" class="btn btn-primary rounded-pill px-4 shadow-sm">
                         <i class="fas fa-shopping-bag me-2"></i>Lịch sử mua hàng
                     </a>
-                    <!-- <button class="btn btn-light rounded-pill px-4 border">
+                    <a href="index.php?c=user&a=edit" class="btn btn-light rounded-pill px-4 border">
                         <i class="fas fa-user-edit me-2"></i>Chỉnh sửa hồ sơ
-                    </button> -->
+                    </a>
                 </div>
             </div>
         </div>

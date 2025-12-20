@@ -38,6 +38,7 @@ class UserController extends BaseController
     public function logout()
     {
         unset($_SESSION['user']);
+        unset($_SESSION['cart']);
         header('Location: index.php?c=user');
     }
 
@@ -102,5 +103,82 @@ class UserController extends BaseController
             'title' => 'Đăng nhập',
             'message' => 'Phải đăng nhập mới có thể thực hiện thao tác này.'
         ]);
+    }
+
+    public function edit()
+    {
+        if (!isset($_SESSION['user'])) {
+            // Gắn active page
+            $_SESSION['active_page'] = 'login';
+
+            // Chuyển hướng về trang đăng nhập nếu chưa đăng nhập
+            header('Location: index.php?c=user&a=login');
+            exit;
+        }
+
+        $model = new UserModel();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_user = $_SESSION['user']['id_user'];
+            $fullname = $_POST['fullname'];
+            $email = $_POST['email'];
+            $phone = $_POST['phone'];
+
+            $updated = $model->updateProfile($id_user, $fullname, $email, $phone);
+            if ($updated) {
+                // Cập nhật thông tin trong session
+                $_SESSION['user'] = $model->getProfile($id_user);
+
+                header('Location: index.php?c=user&a=profile');
+                exit;
+            } else {
+                $error = "Cập nhật thất bại!";
+                $this->render('user/edit', ['error' => $error]);
+            }
+        } else {
+            // Gắn active page
+            $_SESSION['active_page'] = 'profile';
+
+            // Lấy thông tin người dùng hiện tại
+            $user = $model->getProfile($_SESSION['user']['id_user']);
+            $this->render('user/edit', ['user' => $user, 'title' => 'Chỉnh sửa hồ sơ']);
+        }
+    }
+
+    public function editpass()
+    {
+        if (!isset($_SESSION['user'])) {
+            // Gắn active page
+            $_SESSION['active_page'] = 'login';
+
+            // Chuyển hướng về trang đăng nhập nếu chưa đăng nhập
+            header('Location: index.php?c=user&a=login');
+            exit;
+        }
+
+        $model = new UserModel();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_user = $_SESSION['user']['id_user'];
+            $current_password = $_POST['current_password'];
+            $new_password = $_POST['new_password'];
+
+            $changed = $model->changePassword($id_user, $current_password, $new_password);
+            if ($changed) {
+                header('Location: index.php?c=user&a=profile');
+                exit;
+            } else {
+                $error = "Đổi mật khẩu thất bại! Mật khẩu hiện tại không đúng.";
+                $this->render('user/editpass', ['error' => $error]);
+            }
+        } else {
+            // Gắn active page
+            $_SESSION['active_page'] = 'profile';
+
+
+            // Lấy thông tin người dùng hiện tại
+            $user = $model->getProfile($_SESSION['user']['id_user']);
+            $this->render('user/editpass', ['user' => $user, 'title' => 'Đổi mật khẩu']);
+        }
     }
 }

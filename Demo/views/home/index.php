@@ -37,13 +37,13 @@
         <div class="col">
             <div class="card h-100 border-0 shadow-sm product-card-hover rounded-4 overflow-hidden">
                 <div class="position-relative overflow-hidden bg-light" style="padding-top: 100%;">
-              
-                            <?php if (!empty($p['image']) && file_exists('../KhoDT/uploads/' . $p['image'])): ?>
-                                <img src="../KhoDT/uploads/<?php echo $p['image']; ?>" class="position-absolute top-50 start-50 translate-middle w-100 h-100 p-3 object-fit-contain transition-transform">
-                            <?php else: ?>
-                                <span class="text-muted small">Không ảnh</span>
-                            <?php endif; ?>
-        
+
+                    <?php if (!empty($p['image']) && file_exists('../KhoDT/uploads/' . $p['image'])): ?>
+                        <img src="../KhoDT/uploads/<?php echo $p['image']; ?>" class="position-absolute top-50 start-50 translate-middle w-100 h-100 p-3 object-fit-contain transition-transform">
+                    <?php else: ?>
+                        <span class="text-muted small">Không ảnh</span>
+                    <?php endif; ?>
+
 
                     <span class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-pill px-3 py-2 shadow-sm" style="font-size: 0.7rem;">
                         <?= htmlspecialchars($p['brand']) ?>
@@ -59,6 +59,7 @@
 
                     <h6 class="card-title fw-bold text-dark text-truncate-2 mb-2" style="height: 2.8rem; line-height: 1.4;">
                         <?= htmlspecialchars($p['name']) ?>
+                        <small class="text-secondary opacity-75"> (<?= number_format($p['quantity']) ?>)</small>
                     </h6>
 
                     <div class="d-flex align-items-center gap-2 mb-3">

@@ -26,9 +26,10 @@ class OrderDetails
     // Insert order details
     public function create($id_order, $id_product, $quantity)
     {
+
         $stmt = $this->conn->prepare(
             "INSERT INTO orderdetails (id_order, id_product, quantitybuy, date)
-             VALUES (:id_order, :id_product, :quantity, NOW())"
+             VALUES (:id_order, :id_product, :quantity, CURDATE())"
         );
         return $stmt->execute([
             ':id_order'   => $id_order,

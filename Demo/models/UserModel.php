@@ -56,4 +56,40 @@ class UserModel
         // đăng nhập luôn sau khi đăng ký
         return $this->login($username, $pass);
     }
+
+    public function updateProfile($id_user, $fullname, $email, $phone)
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE users 
+             SET fullname = :fullname, email = :email, phone = :phone 
+             WHERE id_user = :id_user"
+        );
+
+        return $stmt->execute([
+            ':fullname' => $fullname,
+            ':email'    => $email,
+            ':phone'    => $phone,
+            ':id_user'  => $id_user
+        ]);
+    }
+
+    public function changePassword($id_user, $currentPassword, $newPassword)
+    {
+        $hashedPass = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        if (!$this->login($_SESSION['user']['username'], $currentPassword)) {
+            return false; // Mật khẩu hiện tại không đúng
+        }
+
+        $stmt = $this->conn->prepare(
+            "UPDATE users 
+             SET password = :password 
+             WHERE id_user = :id_user"
+        );
+
+        return $stmt->execute([
+            ':password' => $hashedPass,
+            ':id_user'  => $id_user
+        ]);
+    }
 }

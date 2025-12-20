@@ -36,7 +36,12 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="rounded border p-1 me-3 bg-light">
-                                        <img src="<?= htmlspecialchars($order['image']) ?>" alt="" style="width: 40px; height: 40px; object-fit: contain;">
+                                        <!-- <img src="<?= htmlspecialchars($order['image']) ?>" alt="" style="width: 40px; height: 40px; object-fit: contain;"> -->
+                                        <?php if (!empty($order['image']) && file_exists('../KhoDT/uploads/' . $order['image'])): ?>
+                                            <img src="../KhoDT/uploads/<?php echo $order['image']; ?>" alt="<?= htmlspecialchars($order['name']) ?>" style="width: 40px; height: 40px; object-fit: contain;">
+                                        <?php else: ?>
+                                            <span class="text-muted small">Không ảnh</span>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="fw-bold text-truncate" style="max-width: 180px;">
                                         <?= htmlspecialchars($order['name']) ?>
